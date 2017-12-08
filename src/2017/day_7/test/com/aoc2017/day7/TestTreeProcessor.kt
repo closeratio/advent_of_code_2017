@@ -105,8 +105,19 @@ class TestTreeProcessor {
     @Test
     fun testCalculateRequiredWeight() {
 
-        assertEquals(discs[6].calculateRequiredWeight(), 60)
+        assertEquals(discs[8].calculateRequiredWeight(), 60)
 
+    }
+
+    @Test
+    fun testCalculateActualRequiredWeight() {
+        val discMap = HashMap<String, Disc>()
+        File(javaClass.getResource("/input.txt").toURI())
+                .readLines()
+                .forEach { TreeProcessor.ParseLine(it, discMap) }
+
+        discMap.filter { it.value.parent == null }
+                .forEach { println(it.value.calculateRequiredWeight()) }
     }
 
 }
