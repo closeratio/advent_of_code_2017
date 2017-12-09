@@ -28,6 +28,6 @@ class Instruction(
     }
 
     override fun toString(): String {
-        return "$targRegister $oper $operVal $condRegister $cond $condVal"
+        return "$targRegister $oper $operVal if $condRegister $cond $condVal"
     }
 }
