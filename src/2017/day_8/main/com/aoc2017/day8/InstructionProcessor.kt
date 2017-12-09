@@ -21,7 +21,7 @@ object InstructionProcessor {
             "==" -> EQUAL_TO
             ">=" -> GREATER_THAN_OR_EQUAL
             ">" -> GREATER_THAN
-            "!=" -> EQUAL_TO
+            "!=" -> NOT_EQUAL_TO
             else -> throw BadInstructionFormatException(line)
         }
     }
@@ -64,15 +64,21 @@ object InstructionProcessor {
         // Get target register
         val targReg = programState.registerMap.getOrPut(
                 instr.targRegister,
-                { Register(instr.targRegister) })
+                { Register(instr.targRegister, 0) })
 
         // Get cond register
         val condReg = programState.registerMap.getOrPut(
                 instr.condRegister,
-                { Register(instr.condRegister) })
+                { Register(instr.condRegister, 0) })
 
         if (TestCondition(condReg, instr.cond, instr.condVal)) {
             PerformOperation(targReg, instr.oper, instr.operVal)
+        }
+
+        // Update highest value
+        val max = programState.registerMap.values.map { it.value }.max()!!
+        if (max > programState.highestValue) {
+            programState.highestValue = max
         }
     }
 

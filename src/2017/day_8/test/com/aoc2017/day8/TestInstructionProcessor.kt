@@ -72,15 +72,34 @@ class TestInstructionProcessor {
 
     @Test
     fun testActualInstructions() {
-        val instructions = File(javaClass.getResource("/input.txt").toURI())
-                .readLines()
-                .map { InstructionProcessor.DecodeLine(it) }
+        val lines = File(javaClass.getResource("/input.txt").toURI()).readLines()
+        val instructions = lines.map { InstructionProcessor.DecodeLine(it) }
 
         val ps = ProgramState()
 
         instructions.forEach { InstructionProcessor.ExecuteInstruction(it, ps) }
 
         println(ps.registerMap.values.map { it.value }.max())
+    }
+
+    @Test
+    fun testHighestHeldValue() {
+        val ps = ProgramState()
+        TEST_INSTRUCTIONS.forEach { InstructionProcessor.ExecuteInstruction(it, ps) }
+
+        assertEquals(ps.highestValue, 10)
+    }
+
+    @Test
+    fun testActualHighestHeldValue() {
+        val lines = File(javaClass.getResource("/input.txt").toURI()).readLines()
+        val instructions = lines.map { InstructionProcessor.DecodeLine(it) }
+
+        val ps = ProgramState()
+
+        instructions.forEach { InstructionProcessor.ExecuteInstruction(it, ps) }
+
+        println(ps.highestValue)
     }
 
 }
