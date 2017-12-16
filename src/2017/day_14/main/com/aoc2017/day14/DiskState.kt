@@ -15,7 +15,7 @@ class DiskState {
     }
 
     fun getRegionCount(): Int {
-        val openSet = state
+        val allSquares = state
                 .mapIndexed { rowInd, row ->
                     row.mapIndexed { colInd, used ->
                         if (used) {
@@ -30,8 +30,25 @@ class DiskState {
 
         val regions = HashSet<Set<Vec2>>()
 
-        HashSet(openSet).forEach {
-            
+        val openSet = HashSet(allSquares)
+
+        while (openSet.isNotEmpty()) {
+            val currRegion = HashSet<Vec2>()
+            val searchList = ArrayList<Vec2>()
+            searchList.add(openSet.first())
+
+            while (searchList.isNotEmpty()) {
+                val curr = searchList[0]
+                openSet.remove(curr)
+                currRegion.add(curr)
+                searchList.remove(curr)
+
+                curr.getAdjacent()
+                        .filter { it in openSet }
+                        .forEach { searchList.add(it) }
+            }
+
+            regions.add(currRegion)
         }
 
         return regions.size
