@@ -56,6 +56,11 @@ class TestDiskDefragmenter {
         assertEquals(DiskDefragmenter.getDiskState("flqrgnkx").getRegionCount(), 1242)
     }
 
+    @Test
+    fun testActualRegionCount() {
+        println(DiskDefragmenter.getDiskState("uugsqrei").getRegionCount())
+    }
+
 
 
 }
