@@ -5,11 +5,11 @@
     <content url="file://$MODULE_DIR$/../src/2017/day_14">
       <sourceFolder url="file://$MODULE_DIR$/../src/2017/day_14/main" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../src/2017/day_14/test" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../src/2017/day_14/test/res" type="java-test-resource" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
     <orderEntry type="library" name="testng" level="project" />
+    <orderEntry type="module" module-name="2017_day_10" />
   </component>
 </module>

@@ -1,9 +1,7 @@
 package com.aoc2017.day10
 
-import org.omg.CORBA.INTF_REPOS
-
 class CircularList(
-        listLength: Int
+        listLength: Int = 256
 ) {
 
     val list = IntRange(0, listLength - 1).toMutableList()
@@ -69,6 +67,10 @@ class CircularList(
                         addAll(listOf(17, 31, 73, 47, 23))
                     }
 
+        }
+
+        fun knotHash(key: String): String {
+            return CircularList().getKnotHash(key)
         }
     }
 
