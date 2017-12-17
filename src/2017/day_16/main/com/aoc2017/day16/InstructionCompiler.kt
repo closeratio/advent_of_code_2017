@@ -17,7 +17,7 @@ object InstructionCompiler {
             }
             'p' -> {
                 val names = inst.substring(1).split("/")
-                if (names[0] != names[1]) PartnerInstruction(names[0], names[1]) else NoopInstruction
+                if (names[0] != names[1]) PartnerInstruction(names[0][0], names[1][0]) else NoopInstruction
             }
             else -> throw IOException("Unhandled instruction: $inst")
         }

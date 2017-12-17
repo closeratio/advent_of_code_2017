@@ -19,12 +19,12 @@ class TestProgramSet {
 
     @Test
     fun testSetCreation() {
-        assertEquals(testProgramSet.programs.size, 5)
-        assertEquals(testProgramSet.programs[0], "a")
-        assertEquals(testProgramSet.programs[1], "b")
-        assertEquals(testProgramSet.programs[2], "c")
-        assertEquals(testProgramSet.programs[3], "d")
-        assertEquals(testProgramSet.programs[4], "e")
+        assertEquals(testProgramSet.programs.length, 5)
+        assertEquals(testProgramSet.programs[0], 'a')
+        assertEquals(testProgramSet.programs[1], 'b')
+        assertEquals(testProgramSet.programs[2], 'c')
+        assertEquals(testProgramSet.programs[3], 'd')
+        assertEquals(testProgramSet.programs[4], 'e')
     }
 
     @Test
@@ -47,7 +47,7 @@ class TestProgramSet {
 
     @Test
     fun testPartner() {
-        testProgramSet.executeInstruction(PartnerInstruction("b", "d"))
+        testProgramSet.executeInstruction(PartnerInstruction('b', 'd'))
         assertEquals(testProgramSet.getState(), "adcbe")
     }
 
@@ -97,28 +97,24 @@ class TestProgramSet {
                 .split(",")
                 .map { it.trim() }
                 .map { InstructionCompiler.compileInstruction(it) }
-                .toMutableList()
-
-        val lastInst = instructions.last()
-        instructions.removeAt(instructions.size - 1)
 
         var iterCount = 0
-        while (iterCount < 1_000_000_000) {
+        do {
+            var loop = false
+            for (inst in instructions) {
+                iterCount++
+                if (progSet.executeInstruction(inst)) {
+                    loop = true
 
-            instructions.forEach { progSet.executeInstruction(it) }
-
-            val cached = progSet.getCachedState(lastInst)
-            if (cached != null) {
-                println(cached)
-                return
-            } else {
-                progSet.executeInstruction(lastInst)
+                    break
+                }
             }
+        } while (!loop)
 
-            iterCount++
-        }
+        // work out loop length
 
-        println(progSet.getState())
+        println(iterCount)
+
     }
 
 }

@@ -7,12 +7,12 @@ class ExchangeInstruction(
         val ind2: Int
 ) : Instruction() {
 
-    override fun execute(ps: ProgramSet): List<String> {
+    override fun execute(ps: ProgramSet): String {
         val progs = ps.programs.toMutableList()
         val temp = progs[ind1]
         progs[ind1] = progs[ind2]
         progs[ind2] = temp
-        return progs.toList()
+        return progs.joinToString("")
     }
 
     override fun equals(other: Any?): Boolean {

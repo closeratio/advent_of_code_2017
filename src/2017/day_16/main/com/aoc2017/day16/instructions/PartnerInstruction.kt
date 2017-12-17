@@ -3,14 +3,14 @@ package com.aoc2017.day16.instructions
 import com.aoc2017.day16.ProgramSet
 
 class PartnerInstruction(
-        val nameA: String,
-        val nameB: String
+        val nameA: Char,
+        val nameB: Char
 ): Instruction() {
 
-    override fun execute(ps: ProgramSet): List<String> {
+    override fun execute(ps: ProgramSet): String {
         return ExchangeInstruction(
-                getIndex(ps, nameA),
-                getIndex(ps, nameB)
+                ps.programs.indexOf(nameA),
+                ps.programs.indexOf(nameB)
         ).execute(ps)
     }
 
@@ -25,15 +25,5 @@ class PartnerInstruction(
 
     override fun toString(): String {
         return "Partner instruction($nameA, $nameB)"
-    }
-
-    private fun getIndex(ps: ProgramSet, name: String): Int {
-        ps.programs.forEachIndexed { index, prog ->
-            if (prog == name) {
-                return index
-            }
-        }
-
-        throw RuntimeException("Can't find prog with name: $name")
     }
 }

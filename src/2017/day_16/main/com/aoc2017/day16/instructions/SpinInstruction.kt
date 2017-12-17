@@ -6,9 +6,9 @@ class SpinInstruction(
         val count: Int
 ): Instruction() {
 
-    override fun execute(ps: ProgramSet): List<String> {
-        val progs = ps.programs
-        return (progs.drop(progs.size - count) + progs.take(progs.size - count)).toList()
+    override fun execute(ps: ProgramSet): String {
+        val progs = ps.programs.toList()
+        return (progs.drop(progs.size - count) + progs.take(progs.size - count)).joinToString("")
     }
 
     override fun equals(other: Any?): Boolean {
