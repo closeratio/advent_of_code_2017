@@ -29,35 +29,35 @@ class TestProgramSet {
 
     @Test
     fun testSpin1() {
-        testProgramSet.executeInstruction(SpinInstruction(1))
+        testProgramSet.executeInstructions(listOf(SpinInstruction(1)))
         assertEquals(testProgramSet.getState(), "eabcd")
     }
 
     @Test
     fun testSpin2() {
-        testProgramSet.executeInstruction(SpinInstruction(3))
+        testProgramSet.executeInstructions(listOf(SpinInstruction(3)))
         assertEquals(testProgramSet.getState(), "cdeab")
     }
 
     @Test
     fun testExchange() {
-        testProgramSet.executeInstruction(ExchangeInstruction(3, 4))
+        testProgramSet.executeInstructions(listOf(ExchangeInstruction(3, 4)))
         assertEquals(testProgramSet.getState(), "abced")
     }
 
     @Test
     fun testPartner() {
-        testProgramSet.executeInstruction(PartnerInstruction('b', 'd'))
+        testProgramSet.executeInstructions(listOf(PartnerInstruction('b', 'd')))
         assertEquals(testProgramSet.getState(), "adcbe")
     }
 
     @Test
     fun testExecuteInstructions() {
-        listOf(
+        testProgramSet.executeInstructions(listOf(
                 "s1",
                 "x3/4",
                 "pe/b"
-        ).map { testProgramSet.executeInstruction(InstructionCompiler.compileInstruction(it)) }
+        ).map { InstructionCompiler.compileInstruction(it) })
 
         assertEquals(testProgramSet.getState(), "baedc")
     }
@@ -70,21 +70,24 @@ class TestProgramSet {
                 .map { it.trim() }
 
         val progSet = ProgramSet(16)
-        instructions.forEach { progSet.executeInstruction(InstructionCompiler.compileInstruction(it)) }
+        progSet.executeInstructions(instructions.map { InstructionCompiler.compileInstruction(it) })
 
         println(progSet.getState())
+
+        // Only added once answer for part 1 was found and verified
+        assertEquals(progSet.getState(), "nlciboghjmfdapek")
     }
 
     @Test
     fun testExecuteInstructionsMultiple() {
-        listOf(
+        testProgramSet.executeInstructions(listOf(
                 "s1",
                 "x3/4",
                 "pe/b",
                 "s1",
                 "x3/4",
                 "pe/b"
-        ).forEach { testProgramSet.executeInstruction(InstructionCompiler.compileInstruction(it)) }
+        ).map { InstructionCompiler.compileInstruction(it) })
 
         assertEquals(testProgramSet.getState(), "ceadb")
     }
@@ -98,22 +101,20 @@ class TestProgramSet {
                 .map { it.trim() }
                 .map { InstructionCompiler.compileInstruction(it) }
 
-        var iterCount = 0
-        do {
-            var loop = false
-            for (inst in instructions) {
-                iterCount++
-                if (progSet.executeInstruction(inst)) {
-                    loop = true
+        val sequence = mutableListOf<String>()
 
-                    break
-                }
+        val times = 1_000_000_000
+        repeat(times) {
+            if (progSet.getState() in sequence) {
+                println(sequence[times % sequence.size])
+                return
+            } else {
+                sequence.add(progSet.getState())
+                progSet.executeInstructions(instructions)
             }
-        } while (!loop)
+        }
 
-        // work out loop length
 
-        println(iterCount)
 
     }
 
