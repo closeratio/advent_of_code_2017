@@ -4,7 +4,7 @@ import com.aoc2017.day16.ProgramSet
 
 object NoopInstruction: Instruction() {
 
-    override fun execute(ps: ProgramSet): List<String> {
+    override fun execute(ps: ProgramSet): String {
         return ps.programs
     }
 

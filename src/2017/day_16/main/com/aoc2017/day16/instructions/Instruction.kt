@@ -4,6 +4,6 @@ import com.aoc2017.day16.ProgramSet
 
 abstract class Instruction {
 
-    abstract fun execute(ps: ProgramSet): List<String>
+    abstract fun execute(ps: ProgramSet): String
 
 }

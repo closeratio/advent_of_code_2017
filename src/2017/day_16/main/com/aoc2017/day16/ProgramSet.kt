@@ -6,36 +6,31 @@ class ProgramSet(
         progCount: Int
 ) {
 
-    val stateCache = HashMap<Pair<Instruction, List<String>>, List<String>>()
+    val stateCache = HashMap<Pair<Instruction, String>, String>()
 
-    var programs: List<String> = IntRange(0, progCount - 1)
+    var programs: String = IntRange(0, progCount - 1)
             .map { ('a'.toInt() + it).toChar().toString() }
+            .joinToString("")
 
-    fun executeInstruction(inst: Instruction) {
-        val pair = Pair(inst, programs)
-        val result = stateCache[pair]
+    var newCacheCount = 0
 
-        if (result != null) {
-            programs = result
-        } else {
-            programs = inst.execute(this)
-            stateCache[pair] = programs
-        }
-    }
-
-    fun getCachedState(inst: Instruction): String? {
+    fun executeInstruction(inst: Instruction): Boolean {
         val pair = Pair(inst, programs)
         val result = stateCache[pair]
 
         return if (result != null) {
-             result.joinToString("") { it }
+            programs = result
+            true
         } else {
-            null
+            programs = inst.execute(this)
+            stateCache[pair] = programs
+            newCacheCount++
+            false
         }
     }
 
     fun getState(): String {
-        return programs.joinToString("") { it }
+        return programs
     }
 
 }
