@@ -20,4 +20,8 @@ class MultiplyInstruction(
     override fun toString(): String {
         return "Multiply instruction ($reg, $value)"
     }
+
+    override fun getSourceRep(): String {
+        return "mul ${reg.getSourceRep()} ${value.getSourceRep()}"
+    }
 }

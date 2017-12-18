@@ -23,13 +23,13 @@ class TestAssemblyInterpreter {
     fun testCompileInstructions() {
         val testReg = Register("a")
 
-        assertEquals(compileLine("set a 1"), SetInstruction(testReg, IntValue(1)))
-        assertEquals(compileLine("add a 2"), AddInstruction(testReg, IntValue(2)))
+        assertEquals(compileLine("set a 1"), SetInstruction(testReg, LongValue(1)))
+        assertEquals(compileLine("add a 2"), AddInstruction(testReg, LongValue(2)))
         assertEquals(compileLine("mul a a"), MultiplyInstruction(testReg, testReg))
-        assertEquals(compileLine("mod a 5"), ModuloInstruction(testReg, IntValue(5)))
+        assertEquals(compileLine("mod a 5"), ModuloInstruction(testReg, LongValue(5)))
         assertEquals(compileLine("snd a"), SoundInstruction(testReg))
         assertEquals(compileLine("rcv a"), RecoverInstruction(testReg))
-        assertEquals(compileLine("jgz a -1"), JumpInstruction(testReg, IntValue(-1)))
+        assertEquals(compileLine("jgz a -1"), JumpInstruction(testReg, LongValue(-1)))
     }
 
     @Test
@@ -44,7 +44,11 @@ class TestAssemblyInterpreter {
                 .trim()
                 .split("\n")
                 .map { it.trim() }
-                .forEach { compileLine(it) }
+                .forEach {
+                    val inst = compileLine(it)
+                    val src = inst.getSourceRep()
+                    assertEquals(src, it)
+                }
     }
 
     @Test
@@ -92,9 +96,20 @@ class TestAssemblyInterpreter {
         machine.executeInstruction(instructions[9])
         assertEquals(machine.currInstIndex, 7)
 
+        machine.executeInstruction(instructions[7])
+        assertEquals(machine.currInstIndex, 6)
+
         machine.executeInstruction(instructions[6])
         assertEquals(machine.registers["a"]!!.value, 4)
-        assertEquals(machine.currInstIndex, 8)
+        assertEquals(machine.currInstIndex, 7)
+    }
+
+    @Test
+    fun testInstructionExecutionFull() {
+        val machine = Machine()
+        machine.executeAllInstructions(TEST_INSTRUCTIONS.map { compileLine(it) })
+        assertEquals(machine.iterCount, 12)
+        assertEquals(machine.currInstIndex, 7)
     }
 
     @Test

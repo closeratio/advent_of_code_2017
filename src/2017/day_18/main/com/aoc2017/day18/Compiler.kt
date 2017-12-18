@@ -43,7 +43,7 @@ object Compiler {
 
     private fun getValueHolder(str: String): ValueHolder {
         return if (str.matches(NUM_REGEX)) {
-            IntValue(str.toInt())
+            LongValue(str.toLong())
         } else {
             Register(str)
         }

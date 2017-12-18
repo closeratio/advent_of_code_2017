@@ -19,4 +19,8 @@ class JumpInstruction(
     override fun toString(): String {
         return "Jump instruction($test, $jumpValue)"
     }
+
+    override fun getSourceRep(): String {
+        return "jgz ${test.getSourceRep()} ${jumpValue.getSourceRep()}"
+    }
 }

@@ -18,4 +18,8 @@ class RecoverInstruction(
     override fun toString(): String {
         return "Recover instruction ($reg)"
     }
+
+    override fun getSourceRep(): String {
+        return "rcv ${reg.getSourceRep()}"
+    }
 }

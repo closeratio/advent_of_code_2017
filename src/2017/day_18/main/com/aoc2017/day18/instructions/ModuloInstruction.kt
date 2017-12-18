@@ -20,4 +20,8 @@ class ModuloInstruction(
     override fun toString(): String {
         return "Modulo instruction ($reg, $value)"
     }
+
+    override fun getSourceRep(): String {
+        return "mod ${reg.getSourceRep()} ${value.getSourceRep()}"
+    }
 }

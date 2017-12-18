@@ -4,9 +4,9 @@ class Register(
         val name: String
 ): ValueHolder() {
 
-    var value = 0
+    var value = 0L
 
-    override fun getVal(): Int {
+    override fun getVal(): Long {
         return value
     }
 
@@ -21,5 +21,9 @@ class Register(
 
     override fun toString(): String {
         return "Register $name ($value)"
+    }
+
+    override fun getSourceRep(): String {
+        return name
     }
 }

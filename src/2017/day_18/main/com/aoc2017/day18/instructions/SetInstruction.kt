@@ -20,4 +20,8 @@ class SetInstruction(
     override fun toString(): String {
         return "Set instruction($reg, $value)"
     }
+
+    override fun getSourceRep(): String {
+        return "set ${reg.getSourceRep()} ${value.getSourceRep()}"
+    }
 }
