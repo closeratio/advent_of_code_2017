@@ -1,7 +1,7 @@
-package com.aoc2017.day18
+package com.aoc2017.day18_part1
 
-import com.aoc2017.day18.Compiler.compileLine
-import com.aoc2017.day18.instructions.*
+import com.aoc2017.day18_part1.Compiler.compileLine
+import com.aoc2017.day18_part1.instructions.*
 import org.testng.Assert.assertEquals
 import org.testng.annotations.Test
 

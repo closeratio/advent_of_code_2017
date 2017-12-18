@@ -1,6 +1,4 @@
-package com.aoc2017.day18.instructions
-
-import com.aoc2017.day18.Machine
+package com.aoc2017.day18_part1.instructions
 
 abstract class Instruction {
 

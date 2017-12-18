@@ -1,4 +1,4 @@
-package com.aoc2017.day18
+package com.aoc2017.day18_part2
 
 abstract class ValueHolder {
 

@@ -1,6 +1,6 @@
-package com.aoc2017.day18
+package com.aoc2017.day18_part1
 
-import com.aoc2017.day18.instructions.*
+import com.aoc2017.day18_part1.instructions.*
 
 class Machine {
 

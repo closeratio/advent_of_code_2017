@@ -1,27 +1,29 @@
-package com.aoc2017.day18
+package com.aoc2017.day18_part2
 
-class LongValue(
-        val value: Long
+class Register(
+        val name: String
 ): ValueHolder() {
+
+    var value = 0L
 
     override fun getVal(): Long {
         return value
     }
 
     override fun equals(other: Any?): Boolean {
-        val v = other as? LongValue ?: return false
-        return value == v.value
+        val reg = other as? Register ?: return false
+        return name == reg.name
     }
 
     override fun hashCode(): Int {
-        return value.hashCode()
+        return name.hashCode()
     }
 
     override fun toString(): String {
-        return "Int value ($value)"
+        return "Register $name ($value)"
     }
 
     override fun getSourceRep(): String {
-        return value.toString()
+        return name
     }
 }
