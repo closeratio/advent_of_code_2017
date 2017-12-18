@@ -1,15 +1,15 @@
-package com.aoc2017.day18.instructions
+package com.aoc2017.day18_part2.instructions
 
-import com.aoc2017.day18.Register
-import com.aoc2017.day18.ValueHolder
+import com.aoc2017.day18_part2.Register
+import com.aoc2017.day18_part2.ValueHolder
 
-class ModuloInstruction(
+class AddInstruction(
         val reg: Register,
         val value: ValueHolder)
     : Instruction() {
 
     override fun equals(other: Any?): Boolean {
-        val inst = other as? ModuloInstruction ?: return false
+        val inst = other as? AddInstruction ?: return false
         return reg == inst.reg && value == inst.value
     }
 
@@ -18,10 +18,10 @@ class ModuloInstruction(
     }
 
     override fun toString(): String {
-        return "Modulo instruction ($reg, $value)"
+        return "Add instruction($reg, $value)"
     }
 
     override fun getSourceRep(): String {
-        return "mod ${reg.getSourceRep()} ${value.getSourceRep()}"
+        return "add ${reg.getSourceRep()} ${value.getSourceRep()}"
     }
 }

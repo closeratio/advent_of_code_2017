@@ -1,6 +1,6 @@
-package com.aoc2017.day18.instructions
+package com.aoc2017.day18_part1.instructions
 
-import com.aoc2017.day18.ValueHolder
+import com.aoc2017.day18_part1.ValueHolder
 
 class SoundInstruction(
         val valueHolder: ValueHolder)

@@ -1,6 +1,6 @@
-package com.aoc2017.day18
+package com.aoc2017.day18_part2
 
-import com.aoc2017.day18.instructions.*
+import com.aoc2017.day18_part2.instructions.*
 import java.io.IOException
 
 object Compiler {
