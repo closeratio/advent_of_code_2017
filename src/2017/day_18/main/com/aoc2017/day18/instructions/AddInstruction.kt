@@ -20,4 +20,8 @@ class AddInstruction(
     override fun toString(): String {
         return "Add instruction($reg, $value)"
     }
+
+    override fun getSourceRep(): String {
+        return "add ${reg.getSourceRep()} ${value.getSourceRep()}"
+    }
 }

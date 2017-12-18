@@ -8,6 +8,7 @@ class Machine {
     val soundRegister = Register("sound")
 
     var currInstIndex = 0
+    var iterCount = 0
     var recovered = false
 
     fun executeAllInstructions(instructions: List<Instruction>) {
@@ -19,6 +20,7 @@ class Machine {
     }
 
     fun executeInstruction(inst: Instruction) {
+        iterCount++
         when (inst) {
             is SetInstruction -> executeSetInstruction(inst)
             is AddInstruction -> executeAddInstruction(inst)
@@ -34,7 +36,7 @@ class Machine {
     private fun executeJumpInstruction(inst: JumpInstruction) {
         val testVal = getValueHolderVal(inst.test)
         if (testVal > 0) {
-            currInstIndex += getValueHolderVal(inst.jumpValue)
+            currInstIndex += getValueHolderVal(inst.jumpValue).toInt()
         } else {
             currInstIndex++
         }
@@ -42,9 +44,9 @@ class Machine {
 
     private fun executeRecoverInstruction(inst: RecoverInstruction) {
         val reg = getOrPutReg(inst.reg.name)
-        if (reg.value > 0) {
+        if (reg.value != 0L) {
             reg.value = soundRegister.value
-            println("Recover executed with value ${soundRegister.value}")
+            println("Recover executed with value ${soundRegister.value} at iteration $iterCount")
             recovered = true
         }
         currInstIndex++
@@ -52,6 +54,7 @@ class Machine {
 
     private fun executeSoundInstruction(inst: SoundInstruction) {
         soundRegister.value = getValueHolderVal(inst.valueHolder)
+        println("sounding at freq ${soundRegister.value}")
         currInstIndex++
     }
 
@@ -83,10 +86,10 @@ class Machine {
         return registers.getOrPut(name, { Register(name) })
     }
 
-    private fun getValueHolderVal(vh: ValueHolder): Int {
+    private fun getValueHolderVal(vh: ValueHolder): Long {
         return when (vh) {
             is Register -> getOrPutReg(vh.name).value
-            is IntValue -> vh.value
+            is LongValue -> vh.value
             else -> throw RuntimeException("Unhandled value holder: $vh")
         }
     }
