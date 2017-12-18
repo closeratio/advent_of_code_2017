@@ -28,9 +28,7 @@ class TestDigitParser {
 
     @Test
     fun actualSimpleTest() {
-        println(DigitParser.parseDigits(
-                File(javaClass.getResource("/input.txt").toURI()).readText()
-        ))
+        println(DigitParser.parseDigits(javaClass.getResource("/input.txt").readText()))
     }
 
     @Test
@@ -60,9 +58,7 @@ class TestDigitParser {
 
     @Test
     fun actualComplexTest() {
-        println(DigitParser.parseDigitsComplex(
-                File(javaClass.getResource("/input.txt").toURI()).readText()
-        ))
+        println(DigitParser.parseDigitsComplex(javaClass.getResource("/input.txt").readText()))
     }
 
 }
