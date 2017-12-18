@@ -54,7 +54,6 @@ class Machine {
 
     private fun executeSoundInstruction(inst: SoundInstruction) {
         soundRegister.value = getValueHolderVal(inst.valueHolder)
-        println("sounding at freq ${soundRegister.value}")
         currInstIndex++
     }
 

@@ -2,10 +2,10 @@
 <module type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../src/2017/day_18">
-      <sourceFolder url="file://$MODULE_DIR$/../src/2017/day_18/main" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../src/2017/day_18/test" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../src/2017/day_18/test/res" type="java-test-resource" />
+    <content url="file://$MODULE_DIR$/../src/2017/day_18_part_1">
+      <sourceFolder url="file://$MODULE_DIR$/../src/2017/day_18_part_1/main" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../src/2017/day_18_part_1/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../src/2017/day_18_part_1/test/res" type="java-test-resource" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
