@@ -24,8 +24,8 @@ object Compiler {
             "add" -> AddInstruction(getRegister(line, target), getModifier(line, modifier))
             "mul" -> MultiplyInstruction(getRegister(line, target), getModifier(line, modifier))
             "mod" -> ModuloInstruction(getRegister(line, target), getModifier(line, modifier))
-            "snd" -> SoundInstruction(getValueHolder(target))
-            "rcv" -> RecoverInstruction(getRegister(line, target))
+            "snd" -> SendInstruction(getValueHolder(target))
+            "rcv" -> ReceiveInstruction(getRegister(line, target))
             "jgz" -> JumpInstruction(getValueHolder(target), getModifier(line, modifier))
             else -> throw IOException("Unhandled instruction: $instName")
         }

@@ -2,12 +2,12 @@ package com.aoc2017.day18_part2.instructions
 
 import com.aoc2017.day18_part2.ValueHolder
 
-class SoundInstruction(
+class SendInstruction(
         val valueHolder: ValueHolder)
     : Instruction() {
 
     override fun equals(other: Any?): Boolean {
-        val inst = other as? SoundInstruction ?: return false
+        val inst = other as? SendInstruction ?: return false
         return valueHolder == inst.valueHolder
     }
 

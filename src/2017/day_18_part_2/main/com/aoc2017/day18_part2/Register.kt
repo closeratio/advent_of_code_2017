@@ -1,10 +1,9 @@
 package com.aoc2017.day18_part2
 
 class Register(
-        val name: String
+        val name: String,
+        var value: Long = 0L
 ): ValueHolder() {
-
-    var value = 0L
 
     override fun getVal(): Long {
         return value
