@@ -1,15 +1,18 @@
 package com.aoc2017.day18_part2
 
 import com.aoc2017.day18_part2.instructions.*
+import java.util.concurrent.LinkedBlockingQueue
 
-class Machine {
+class Program(
+        val programID: Long = 0L,
+        val sendList: LinkedBlockingQueue<Long> = LinkedBlockingQueue(),
+        val receiveList: LinkedBlockingQueue<Long> = LinkedBlockingQueue()) {
 
-    val registers = mutableMapOf<String, Register>()
-    val soundRegister = Register("sound")
+    val registers = mutableMapOf("p" to Register("p", programID))
 
     var currInstIndex = 0
-    var iterCount = 0
     var recovered = false
+    var sendCount = 0
 
     fun executeAllInstructions(instructions: List<Instruction>) {
         while (currInstIndex >= 0
@@ -20,14 +23,13 @@ class Machine {
     }
 
     fun executeInstruction(inst: Instruction) {
-        iterCount++
         when (inst) {
             is SetInstruction -> executeSetInstruction(inst)
             is AddInstruction -> executeAddInstruction(inst)
             is MultiplyInstruction -> executeMultiplyInstruction(inst)
             is ModuloInstruction -> executeModuloInstruction(inst)
-            is SoundInstruction -> executeSoundInstruction(inst)
-            is RecoverInstruction -> executeRecoverInstruction(inst)
+            is SendInstruction -> executeSendInstruction(inst)
+            is ReceiveInstruction -> executeReceiveInstruction(inst)
             is JumpInstruction -> executeJumpInstruction(inst)
             else -> throw RuntimeException("Unhandled instruction: $inst")
         }
@@ -42,19 +44,15 @@ class Machine {
         }
     }
 
-    private fun executeRecoverInstruction(inst: RecoverInstruction) {
-        val reg = getOrPutReg(inst.reg.name)
-        if (reg.value != 0L) {
-            reg.value = soundRegister.value
-            println("Recover executed with value ${soundRegister.value} at iteration $iterCount")
-            recovered = true
-        }
+    private fun executeReceiveInstruction(inst: ReceiveInstruction) {
+        getOrPutReg(inst.reg.name).value = receiveList.take()
         currInstIndex++
     }
 
-    private fun executeSoundInstruction(inst: SoundInstruction) {
-        soundRegister.value = getValueHolderVal(inst.valueHolder)
+    private fun executeSendInstruction(inst: SendInstruction) {
+        sendList.put(getValueHolderVal(inst.valueHolder))
         currInstIndex++
+        sendCount++
     }
 
     private fun executeModuloInstruction(inst: ModuloInstruction) {

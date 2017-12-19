@@ -2,12 +2,12 @@ package com.aoc2017.day18_part2.instructions
 
 import com.aoc2017.day18_part2.Register
 
-class RecoverInstruction(
+class ReceiveInstruction(
         val reg: Register)
     : Instruction() {
 
     override fun equals(other: Any?): Boolean {
-        val inst = other as? RecoverInstruction ?: return false
+        val inst = other as? ReceiveInstruction ?: return false
         return reg == inst.reg
     }
 
