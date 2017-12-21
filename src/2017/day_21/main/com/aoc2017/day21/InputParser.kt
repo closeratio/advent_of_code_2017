@@ -4,7 +4,7 @@ import java.io.IOException
 
 object InputParser {
 
-    fun parseState(data: String): Array<Array<Boolean>> {
+    fun parseState(data: String): PixelState {
         return mapLine(data.trim().replace("\n", "/"))
     }
 
@@ -16,8 +16,8 @@ object InputParser {
         return EnhancementRule(input, output)
     }
 
-    private fun mapLine(line: String): Array<Array<Boolean>> {
-        return line
+    private fun mapLine(line: String): PixelState {
+        return PixelState(line
                 .split("/")
                 .map {
                     it.map {
@@ -27,7 +27,7 @@ object InputParser {
                             else -> throw IOException("Bad character: $it")
                         }
                     }.toTypedArray() }
-                .toTypedArray()
+                .toTypedArray())
     }
 
 }
