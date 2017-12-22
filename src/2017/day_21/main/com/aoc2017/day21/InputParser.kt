@@ -10,7 +10,7 @@ object InputParser {
 
     fun parseRule(line: String): HashMap<PixelState, PixelState> {
         val split = line.split("=>").map { it.trim() }
-        val inputs = (mapLine(split[0]) as PixelStateNode).getPermutations()
+        val inputs = (mapLine(split[0]) as PixelState).getPermutations()
         val output = mapLine(split[1])
 
         val mapping = hashMapOf<PixelState, PixelState>()
@@ -22,7 +22,7 @@ object InputParser {
     }
 
     private fun mapLine(line: String): PixelState {
-        return PixelStateNode.create(line
+        return PixelState(line
                 .split("/")
                 .map {
                     it.map {
