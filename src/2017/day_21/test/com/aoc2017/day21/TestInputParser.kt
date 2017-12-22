@@ -1,6 +1,10 @@
 package com.aoc2017.day21
 
+import com.aoc2017.day21.InputParser.parseRule
+import com.aoc2017.day21.InputParser.parseState
+import org.testng.Assert
 import org.testng.Assert.assertEquals
+import org.testng.Assert.assertTrue
 import org.testng.annotations.Test
 
 class TestInputParser {
@@ -14,41 +18,41 @@ class TestInputParser {
 
     @Test
     fun testParseRule1() {
-        val rule = InputParser.parseRule(TEST_RULESET[0])
+        val rules = parseRule(TEST_RULESET[0])
 
-        assertEquals(rule.input, PixelStateNode.create(arrayOf(
+        assertTrue(rules.keys.contains(PixelStateNode.create(arrayOf(
                 arrayOf(false, false),
                 arrayOf(false, true)
-        )))
+        ))))
 
-        assertEquals(rule.output, PixelStateNode.create(arrayOf(
+        assertTrue(rules.values.contains(PixelStateNode.create(arrayOf(
                 arrayOf(true, true, false),
                 arrayOf(true, false, false),
                 arrayOf(false, false, false)
-        )))
+        ))))
     }
 
     @Test
     fun testParseRule2() {
-        val rule = InputParser.parseRule(TEST_RULESET[1])
+        val rules = parseRule(TEST_RULESET[1])
 
-        assertEquals(rule.input, PixelStateNode.create(arrayOf(
+        assertTrue(rules.keys.contains(PixelStateNode.create(arrayOf(
                 arrayOf(false, true, false),
                 arrayOf(false, false, true),
                 arrayOf(true, true, true)
-        )))
+        ))))
 
-        assertEquals(rule.output, PixelStateNode.create(arrayOf(
+        assertTrue(rules.values.contains(PixelStateNode.create(arrayOf(
                 arrayOf(true, false, false, true),
                 arrayOf(false, false, false, false),
                 arrayOf(false, false, false, false),
                 arrayOf(true, false, false, true)
-        )))
+        ))))
     }
 
     @Test
     fun testParseInputState() {
-        val state = InputParser.parseState(DEFAULT_STATE)
+        val state = parseState(DEFAULT_STATE)
 
         assertEquals(state, PixelStateNode.create(arrayOf(
                 arrayOf(false, true, false),
@@ -174,12 +178,9 @@ class TestInputParser {
 
     @Test
     fun testApplyRuleset() {
-        val ruleset = listOf(
-                InputParser.parseRule(TEST_RULESET[0]),
-                InputParser.parseRule(TEST_RULESET[1])
-        )
+        val ruleset = parseRule(TEST_RULESET[0]) +  parseRule(TEST_RULESET[1])
 
-        val state = InputParser.parseState(DEFAULT_STATE)
+        val state = parseState(DEFAULT_STATE)
 
         val iter1State = state.applyRuleset(ruleset)
         assertEquals(iter1State, PixelStateNode.create(arrayOf(
@@ -203,12 +204,9 @@ class TestInputParser {
 
     @Test
     fun testCountOnPixels() {
-        val ruleset = listOf(
-                InputParser.parseRule(TEST_RULESET[0]),
-                InputParser.parseRule(TEST_RULESET[1])
-        )
+        val ruleset = parseRule(TEST_RULESET[0]) + parseRule(TEST_RULESET[1])
 
-        val state = InputParser.parseState(DEFAULT_STATE)
+        val state = parseState(DEFAULT_STATE)
 
         val finalState = state
                 .applyRuleset(ruleset)
@@ -219,22 +217,28 @@ class TestInputParser {
 
     @Test
     fun testActualOnPixels() {
-        val ruleset = javaClass.getResource("/input.txt")
+        val ruleSets = javaClass.getResource("/input.txt")
                 .readText()
                 .trim()
                 .split("\n")
-                .map { InputParser.parseRule(it) }
+                .map { parseRule(it) }
 
-        val state = InputParser.parseState(DEFAULT_STATE)
+        val rules = HashMap<PixelState, PixelState>()
+        ruleSets.forEach { ruleSet ->
+            ruleSet.forEach { k, v -> rules[k] = v }
+        }
+
+        val state = parseState(DEFAULT_STATE)
 
         val finalState = state
-                .applyRuleset(ruleset)
-                .applyRuleset(ruleset)
-                .applyRuleset(ruleset)
-                .applyRuleset(ruleset)
-                .applyRuleset(ruleset)
+                .applyRuleset(rules)
+                .applyRuleset(rules)
+                .applyRuleset(rules)
+                .applyRuleset(rules)
+                .applyRuleset(rules)
 
-        println(finalState.getOnPixelCount())
+        println("On count: ${finalState.getOnPixelCount()}")
+        println("Node count: ${finalState.getNodeCount()}")
     }
 
 }
