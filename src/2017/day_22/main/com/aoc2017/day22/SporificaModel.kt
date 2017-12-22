@@ -9,6 +9,8 @@ class SporificaModel private constructor(
     var currPos = Vec2.ZERO
     var currDir = Direction.UP
 
+    var infectionCount = 0
+
     fun iterate(times: Int = 1) {
 
         repeat(times) {
@@ -19,6 +21,9 @@ class SporificaModel private constructor(
             }
 
             positionMap[currPos] = !positionMap[currPos]!!
+            if (positionMap[currPos]!!) {
+                ++infectionCount
+            }
 
             currPos = currPos.getAdjacent(currDir)
         }
