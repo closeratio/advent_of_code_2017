@@ -17,7 +17,7 @@ object InputParser {
     }
 
     private fun mapLine(line: String): PixelState {
-        return PixelState(line
+        return PixelStateNode.create(line
                 .split("/")
                 .map {
                     it.map {

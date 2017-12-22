@@ -1,7 +1,5 @@
 package com.aoc2017.day21
 
-import jdk.internal.util.xml.impl.Input
-import org.testng.Assert
 import org.testng.Assert.assertEquals
 import org.testng.annotations.Test
 
@@ -18,12 +16,12 @@ class TestInputParser {
     fun testParseRule1() {
         val rule = InputParser.parseRule(TEST_RULESET[0])
 
-        assertEquals(rule.input, PixelState(arrayOf(
+        assertEquals(rule.input, PixelStateNode.create(arrayOf(
                 arrayOf(false, false),
                 arrayOf(false, true)
         )))
 
-        assertEquals(rule.output, PixelState(arrayOf(
+        assertEquals(rule.output, PixelStateNode.create(arrayOf(
                 arrayOf(true, true, false),
                 arrayOf(true, false, false),
                 arrayOf(false, false, false)
@@ -34,13 +32,13 @@ class TestInputParser {
     fun testParseRule2() {
         val rule = InputParser.parseRule(TEST_RULESET[1])
 
-        assertEquals(rule.input, PixelState(arrayOf(
+        assertEquals(rule.input, PixelStateNode.create(arrayOf(
                 arrayOf(false, true, false),
                 arrayOf(false, false, true),
                 arrayOf(true, true, true)
         )))
 
-        assertEquals(rule.output, PixelState(arrayOf(
+        assertEquals(rule.output, PixelStateNode.create(arrayOf(
                 arrayOf(true, false, false, true),
                 arrayOf(false, false, false, false),
                 arrayOf(false, false, false, false),
@@ -52,7 +50,7 @@ class TestInputParser {
     fun testParseInputState() {
         val state = InputParser.parseState(DEFAULT_STATE)
 
-        assertEquals(state, PixelState(arrayOf(
+        assertEquals(state, PixelStateNode.create(arrayOf(
                 arrayOf(false, true, false),
                 arrayOf(false, false, true),
                 arrayOf(true, true, true))))
@@ -60,20 +58,20 @@ class TestInputParser {
 
     @Test
     fun testStateRotation() {
-        assertEquals(PixelState(
+        assertEquals((PixelStateNode.create(
                 arrayOf(
                         arrayOf(false, false),
-                        arrayOf(true, true))).rotateState(),
-                PixelState(arrayOf(
+                        arrayOf(true, true))) as PixelStateNode).rotateState(),
+                PixelStateNode.create(arrayOf(
                         arrayOf(true, false),
                         arrayOf(true, false))))
 
-        assertEquals(PixelState(
+        assertEquals((PixelStateNode.create(
                 arrayOf(
                         arrayOf(false, false, true),
                         arrayOf(true, true, false),
-                        arrayOf(false, true, false))).rotateState(),
-                PixelState(arrayOf(
+                        arrayOf(false, true, false))) as PixelStateNode).rotateState(),
+                PixelStateNode.create(arrayOf(
                         arrayOf(false, true, false),
                         arrayOf(true, true, false),
                         arrayOf(false, false, true))))
@@ -81,20 +79,20 @@ class TestInputParser {
 
     @Test
     fun testStateFlip() {
-        assertEquals(PixelState(
+        assertEquals((PixelStateNode.create(
                 arrayOf(
                         arrayOf(false, true),
-                        arrayOf(true, false))).flipState(),
-                PixelState(arrayOf(
+                        arrayOf(true, false))) as PixelStateNode).flipState(),
+                PixelStateNode.create(arrayOf(
                         arrayOf(true, false),
                         arrayOf(false, true))))
 
-        assertEquals(PixelState(
+        assertEquals((PixelStateNode.create(
                 arrayOf(
                         arrayOf(false, true, false),
                         arrayOf(true, false, false),
-                        arrayOf(false, true, true))).flipState(),
-                PixelState(arrayOf(
+                        arrayOf(false, true, true))) as PixelStateNode).flipState(),
+                PixelStateNode.create(arrayOf(
                         arrayOf(false, true, false),
                         arrayOf(false, false, true),
                         arrayOf(true, true, false))))
@@ -102,18 +100,18 @@ class TestInputParser {
 
     @Test
     fun testStatePermutations1() {
-        val perms = PixelState(arrayOf(
+        val perms = (PixelStateNode.create(arrayOf(
                 arrayOf(false, true),
-                arrayOf(true, false))).getPermutations()
+                arrayOf(true, false))) as PixelStateNode).getPermutations()
 
         assertEquals(perms.size, 2)
 
-        assertEquals(perms[0], PixelState(arrayOf(
+        assertEquals(perms[0], PixelStateNode.create(arrayOf(
                 arrayOf(false, true),
                 arrayOf(true, false)
         )))
 
-        assertEquals(perms[1], PixelState(arrayOf(
+        assertEquals(perms[1], PixelStateNode.create(arrayOf(
                 arrayOf(true, false),
                 arrayOf(false, true)
         )))
@@ -121,28 +119,28 @@ class TestInputParser {
 
     @Test
     fun testStatePermutations2() {
-        val perms = PixelState(arrayOf(
+        val perms = (PixelStateNode.create(arrayOf(
                 arrayOf(true, false),
-                arrayOf(true, false))).getPermutations()
+                arrayOf(true, false))) as PixelStateNode).getPermutations()
 
         assertEquals(perms.size, 4)
 
-        assertEquals(perms[0], PixelState(arrayOf(
+        assertEquals(perms[0], PixelStateNode.create(arrayOf(
                 arrayOf(true, false),
                 arrayOf(true, false)
         )))
 
-        assertEquals(perms[1], PixelState(arrayOf(
+        assertEquals(perms[1], PixelStateNode.create(arrayOf(
                 arrayOf(false, true),
                 arrayOf(false, true)
         )))
 
-        assertEquals(perms[2], PixelState(arrayOf(
+        assertEquals(perms[2], PixelStateNode.create(arrayOf(
                 arrayOf(true, true),
                 arrayOf(false, false)
         )))
 
-        assertEquals(perms[3], PixelState(arrayOf(
+        assertEquals(perms[3], PixelStateNode.create(arrayOf(
                 arrayOf(false, false),
                 arrayOf(true, true)
         )))
@@ -150,14 +148,14 @@ class TestInputParser {
 
     @Test
     fun testStatePermutations3() {
-        val perms = PixelState(arrayOf(
+        val perms = (PixelStateNode.create(arrayOf(
                 arrayOf(false, false, false),
                 arrayOf(false, true, false),
-                arrayOf(false, false, false))).getPermutations()
+                arrayOf(false, false, false))) as PixelStateNode).getPermutations()
 
         assertEquals(perms.size, 1)
 
-        assertEquals(perms[0], PixelState(arrayOf(
+        assertEquals(perms[0], PixelStateNode.create(arrayOf(
                 arrayOf(false, false, false),
                 arrayOf(false, true, false),
                 arrayOf(false, false, false)
@@ -166,10 +164,10 @@ class TestInputParser {
 
     @Test
     fun testStatePermutations4() {
-        val perms = PixelState(arrayOf(
+        val perms = (PixelStateNode.create(arrayOf(
                 arrayOf(true, false, false),
                 arrayOf(true, true, false),
-                arrayOf(false, false, false))).getPermutations()
+                arrayOf(false, false, false))) as PixelStateNode).getPermutations()
 
         assertEquals(perms.size, 8)
     }
@@ -184,13 +182,59 @@ class TestInputParser {
         val state = InputParser.parseState(DEFAULT_STATE)
 
         val iter1State = state.applyRuleset(ruleset)
-        Assert.assertEquals(iter1State, PixelState(arrayOf(
+        assertEquals(iter1State, PixelStateNode.create(arrayOf(
                 arrayOf(true, false, false, true),
                 arrayOf(false, false, false, false),
                 arrayOf(false, false, false, false),
                 arrayOf(true, false, false, true)
         )))
 
+        val iter2State = iter1State.applyRuleset(ruleset)
+
+        val tempPSN = PixelStateNode.create(arrayOf(
+                arrayOf(true, true, false),
+                arrayOf(true, false, false),
+                arrayOf(false, false, false)
+        ))
+
+        assertEquals(iter2State, PixelStateGroup.create(arrayOf(tempPSN, tempPSN, tempPSN, tempPSN)))
+
+    }
+
+    @Test
+    fun testCountOnPixels() {
+        val ruleset = listOf(
+                InputParser.parseRule(TEST_RULESET[0]),
+                InputParser.parseRule(TEST_RULESET[1])
+        )
+
+        val state = InputParser.parseState(DEFAULT_STATE)
+
+        val finalState = state
+                .applyRuleset(ruleset)
+                .applyRuleset(ruleset)
+
+        assertEquals(finalState.getOnPixelCount(), 12)
+    }
+
+    @Test
+    fun testActualOnPixels() {
+        val ruleset = javaClass.getResource("/input.txt")
+                .readText()
+                .trim()
+                .split("\n")
+                .map { InputParser.parseRule(it) }
+
+        val state = InputParser.parseState(DEFAULT_STATE)
+
+        val finalState = state
+                .applyRuleset(ruleset)
+                .applyRuleset(ruleset)
+                .applyRuleset(ruleset)
+                .applyRuleset(ruleset)
+                .applyRuleset(ruleset)
+
+        println(finalState.getOnPixelCount())
     }
 
 }
