@@ -53,4 +53,28 @@ class TestSporificaModel {
         println(model.infectionCount)
     }
 
+    @Test
+    fun testAdvancedInfectionCount1() {
+        val model = AdvancedSporificaModel.create(TEST_MAP)
+
+        model.iterate(100)
+        assertEquals(model.infectionCount, 26)
+    }
+
+    @Test
+    fun testAdvancedInfectionCount2() {
+        val model = AdvancedSporificaModel.create(TEST_MAP)
+
+        model.iterate(10000000)
+        assertEquals(model.infectionCount, 2511944)
+    }
+
+    @Test
+    fun testActualAdvancedInfectionCount() {
+        val model = AdvancedSporificaModel.create(javaClass.getResource("/input.txt").readText())
+
+        model.iterate(10000000)
+        println(model.infectionCount)
+    }
+
 }

@@ -25,4 +25,14 @@ enum class Direction {
             else -> throw RuntimeException("Unhandled direction: $this")
         }
     }
+
+    fun opposite(): Direction {
+        return when (this) {
+            UP -> DOWN
+            DOWN -> UP
+            LEFT -> RIGHT
+            RIGHT -> LEFT
+            else -> throw RuntimeException("Unhandled direction: $this")
+        }
+    }
 }
