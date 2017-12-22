@@ -37,4 +37,20 @@ class TestSporificaModel {
         assertEquals(model.positionMap[Vec2(1, 0)], false)
     }
 
+    @Test
+    fun testInfectionCount() {
+        val model = SporificaModel.create(TEST_MAP)
+
+        model.iterate(10000)
+        assertEquals(model.infectionCount, 5587)
+    }
+
+    @Test
+    fun testActualInfectionCount() {
+        val model = SporificaModel.create(javaClass.getResource("/input.txt").readText())
+
+        model.iterate(10000)
+        println(model.infectionCount)
+    }
+
 }
