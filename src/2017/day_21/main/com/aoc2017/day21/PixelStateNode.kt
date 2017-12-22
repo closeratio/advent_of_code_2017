@@ -37,18 +37,8 @@ class PixelStateNode private constructor(val state: Array<Array<Boolean>>)
         return perms.distinct().toTypedArray()
     }
 
-    override fun applyRuleset(rules: List<EnhancementRule>): PixelState {
-        val perms = getPermutations()
-
-        perms.forEach { perm ->
-            rules.forEach { rule ->
-                if (perm == rule.input) {
-                    return rule.output
-                }
-            }
-        }
-
-        throw RuntimeException("Can't find matching rule for $this")
+    override fun applyRuleset(rules: Map<PixelState, PixelState>): PixelState {
+        return rules[this] ?: throw RuntimeException("Can't find matching rule for $this")
     }
 
     override fun getOnPixelCount(): Int {
@@ -56,8 +46,13 @@ class PixelStateNode private constructor(val state: Array<Array<Boolean>>)
                 .filter { it }
                 .count()
     }
+
     override fun getSize(): Int {
         return state.size
+    }
+
+    override fun getNodeCount(): Int {
+        return 1
     }
 
     override fun equals(other: Any?): Boolean {

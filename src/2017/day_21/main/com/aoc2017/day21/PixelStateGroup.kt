@@ -9,7 +9,11 @@ class PixelStateGroup private constructor(val states: Array<PixelState>)
         return states.map { it.getSize() }.sum()
     }
 
-    override fun applyRuleset(rules: List<EnhancementRule>): PixelState {
+    override fun getNodeCount(): Int {
+        return states.map { it.getNodeCount() }.sum()
+    }
+
+    override fun applyRuleset(rules: Map<PixelState, PixelState>): PixelState {
         return PixelStateGroup(
                 states.map { it.applyRuleset(rules) }.toTypedArray())
     }
