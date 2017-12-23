@@ -32,7 +32,7 @@ object Compiler {
 
     fun getValueHolder(line: String): ValueHolder {
         return if (NUM_REGEX.matchEntire(line) != null) {
-            IntValue(line.toInt())
+            LongValue(line.toLong())
         } else {
             Register(line)
         }

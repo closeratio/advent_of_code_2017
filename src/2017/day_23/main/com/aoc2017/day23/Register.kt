@@ -4,6 +4,10 @@ class Register(
         val name: String
 ): ValueHolder() {
 
+    override fun getValue(machine: Machine): Long {
+        return machine.getRegVal(name)
+    }
+
     override fun equals(other: Any?): Boolean {
         val reg = other as? Register ?: return false
         return name == reg.name

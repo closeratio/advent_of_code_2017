@@ -17,14 +17,28 @@ class TestAssemblyInterpreter {
     fun testCompileInstructions() {
         val instructions = Compiler.compile(INPUT_INSTRUCTIONS)
 
-        assertEquals(instructions[0], SetInstruction(Register("b"), IntValue(81)))
+        assertEquals(instructions[0], SetInstruction(Register("b"), LongValue(81)))
         assertEquals(instructions[1], SetInstruction(Register("c"), Register("b")))
 
-        assertEquals(instructions[2], JnzInstruction(Register("a"), IntValue(2)))
+        assertEquals(instructions[2], JnzInstruction(Register("a"), LongValue(2)))
 
-        assertEquals(instructions[4], MulInstruction(Register("b"), IntValue(100)))
+        assertEquals(instructions[4], MulInstruction(Register("b"), LongValue(100)))
 
-        assertEquals(instructions[5], SubInstruction(Register("b"), IntValue(-100000)))
+        assertEquals(instructions[5], SubInstruction(Register("b"), LongValue(-100000)))
+    }
+
+    @Test
+    fun testRunInstructions() {
+        val machine = Machine()
+        machine.executeInstructions(
+                Compiler.compile(javaClass.getResource("/input.txt").readText()))
+
+        println(machine.mulCount)
+    }
+
+    @Test
+    fun testActualAssemblySimulation() {
+        println(AssemblySimulation.simulate())
     }
 
 }
