@@ -1,11 +1,15 @@
 package com.aoc2017.day23
 
-class IntValue(
-        val value: Int
+class LongValue(
+        val value: Long
 ): ValueHolder() {
 
+    override fun getValue(machine: Machine): Long {
+        return value
+    }
+
     override fun equals(other: Any?): Boolean {
-        val iv = other as? IntValue ?: return false
+        val iv = other as? LongValue ?: return false
         return value == iv.value
     }
 
