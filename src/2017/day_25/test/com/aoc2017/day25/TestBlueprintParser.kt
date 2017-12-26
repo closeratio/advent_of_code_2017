@@ -67,4 +67,45 @@ class TestBlueprintParser {
         assertEquals(rs0.valueConditions[0].currValue, 0)
     }
 
+    @Test
+    fun testExecution() {
+        val machine = Machine(ParseBlueprint(TEST_DATA))
+
+        assertEquals(machine.getTapeValue(0), 0)
+        assertEquals(machine.state, "A")
+
+        machine.execute()
+        assertEquals(machine.getTapeValue(0), 1)
+        assertEquals(machine.cursorIndex, 1)
+        assertEquals(machine.state, "B")
+
+        machine.execute()
+        assertEquals(machine.getTapeValue(0), 1)
+        assertEquals(machine.getTapeValue(1), 1)
+        assertEquals(machine.cursorIndex, 0)
+        assertEquals(machine.state, "A")
+
+        machine.execute()
+        assertEquals(machine.getTapeValue(0), 0)
+        assertEquals(machine.getTapeValue(1), 1)
+        assertEquals(machine.getTapeValue(-1), 0)
+        assertEquals(machine.cursorIndex, -1)
+        assertEquals(machine.state, "B")
+
+    }
+
+    @Test
+    fun testChecksum() {
+        val machine = Machine(ParseBlueprint(TEST_DATA))
+
+        assertEquals(machine.executeUntilChecksum(), 3)
+    }
+
+    @Test
+    fun testActualChecksum() {
+        val machine = Machine(ParseBlueprint(javaClass.getResource("/input.txt").readText()))
+
+        println(machine.executeUntilChecksum())
+    }
+
 }
